@@ -6,13 +6,75 @@ class FileOrganizer:
 
     def __init__(self):
      self.mapping = {
+        
+  # Images
+    ".jpg": "Images",
+    ".jpeg": "Images",
+    ".png": "Images",
+    ".gif": "Images",
+    ".bmp": "Images",
+    ".webp": "Images",
 
-   ".jpg": "Images",
-            ".png": "Images",
-            ".pdf": "PDFs",
-            ".mp4": "Videos",
-            ".docx": "Documents",
-            ".doc": "Documents"
+    # Documents
+    ".doc": "Documents",
+    ".docx": "Documents",
+    ".txt": "Documents",
+    ".rtf": "Documents",
+
+    # PDFs
+    ".pdf": "PDFs",
+
+    # Spreadsheets
+    ".xls": "Spreadsheets",
+    ".xlsx": "Spreadsheets",
+    ".csv": "Spreadsheets",
+
+    # Presentations
+    ".ppt": "Presentations",
+    ".pptx": "Presentations",
+
+    # Videos
+    ".mp4": "Videos",
+    ".avi": "Videos",
+    ".mkv": "Videos",
+    ".mov": "Videos",
+
+    # Audio
+    ".mp3": "Audio",
+    ".wav": "Audio",
+    ".aac": "Audio",
+
+    # Archives
+    ".zip": "Archives",
+    ".rar": "Archives",
+    ".7z": "Archives",
+
+    # Code
+    ".py": "Code",
+    ".java": "Code",
+    ".js": "Code",
+    ".html": "Code",
+    ".css": "Code",
+    ".cpp": "Code",
+    ".c": "Code",
+       ".md": "Documents",
+
+    # Java compiled files
+    ".class": "Code",
+
+    # Subtitle files
+    ".vtt": "Subtitles",
+
+    # Executables
+    ".exe": "Applications",
+    ".msi": "Applications",
+
+    # Encrypted files
+    ".enc": "Encrypted",
+
+    # Logs
+    ".log": "Logs"
+
 
     }
      
@@ -23,7 +85,9 @@ class FileOrganizer:
            print(f"{destination_path} created")
 
     def organize_files(self, target_path):
-       
+       stats = {}
+       moved_files = []
+
        files = os.listdir(target_path)
 
        for file in files:
@@ -40,33 +104,41 @@ class FileOrganizer:
 
                  self.create_folder(destination_path)
 
-                 source_path = os.path.join(selected_folder,file)
+                 source_path = os.path.join(target_path,file)
 
 
                  try:
                     shutil.move(source_path,destination_path)
+
+                    if category_folder not in stats:
+                       stats[category_folder] = 1
+                    else:
+                       stats[category_folder] +=1
+
+                    moved_files.append(f"{file}>{category_folder}")
+
                     print(f"{file} moved to {destination_path}")
-                
+
                  except Exception as e:
                     print(f"Error moving {file}:{e}")
+       return moved_files , stats 
 
 
 
 
+# root = Tk()
 
-root = Tk()
-
-root.withdraw()    
-
-
-
-selected_folder = filedialog.askdirectory()
-
-organizer = FileOrganizer()
+# root.withdraw()    
 
 
 
-organizer.organize_files(selected_folder)
+# selected_folder = filedialog.askdirectory()
+
+# organizer = FileOrganizer()
+
+
+
+# organizer.organize_files(selected_folder)
 
 
 
